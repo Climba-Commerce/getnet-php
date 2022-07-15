@@ -1,5 +1,5 @@
 {
-    "name":"edson-nascimento/getnet-php",
+    "name":"climba-commerce/getnet-php",
     "description":"SDK php para integração com a API Getnet",
     "minimum-stability":"stable",
     "license":"MIT",
