@@ -331,6 +331,25 @@ class Getnet
     }
 
     /**
+     * Retorna Solicitações de cancelmento feitas pelo endpoit cancelTransaction (D+n).
+     *
+     * @param string $cancelRequestId
+     * @return AuthorizeResponse|BaseResponse
+     */
+    public function getCancelTransactionByRequestId($cancelRequestId)
+    {
+        try {
+            $request = new Request($this);
+            $response = $request->get($this, "/v1/payments/cancel/request/" . $cancelRequestId);
+            $authresponse = new AuthorizeResponse();
+            $authresponse->mapperJson($response);
+            return $authresponse;
+        } catch (\Exception $e) {
+            return $this->generateErrorResponse($e);
+        }
+    }
+
+    /**
      *
      * @param Transaction $transaction
      * @return BaseResponse|BoletoRespose
