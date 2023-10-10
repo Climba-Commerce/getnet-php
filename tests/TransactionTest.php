@@ -13,6 +13,19 @@ final class TransactionTest extends TestBase
 
         $transaction->setAmount(76.89);
         $this->assertSame(7689, $transaction->getAmount());
+
+        $transaction->setAmount(2428.72);
+        $this->assertSame(242872, $transaction->getAmount());
+
+        $transaction->setAmount('2428.72');
+        $this->assertSame(242872, $transaction->getAmount());
+
+        $transaction->setAmount(299.9);
+        $this->assertSame(29990, $transaction->getAmount());
+
+        $transaction->setAmount('299.9');
+        $this->assertSame(29990, $transaction->getAmount());
+
         $transaction->setAmount('76.89');
         $this->assertSame(7689, $transaction->getAmount());
         
