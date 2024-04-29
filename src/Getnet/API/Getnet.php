@@ -350,6 +350,25 @@ class Getnet
     }
 
     /**
+     * Retorna Solicitações de cancelmento feitas pelo endpoit cancelTransaction (D+n).
+     *
+     * @param string $cancelRequestClientKey
+     * @return AuthorizeResponse|BaseResponse
+     */
+    public function getCancelRequestByClientKey($cancelRequestClientKey)
+    {
+        try {
+            $request = new Request($this);
+            $response = $request->get($this, "/v1/payments/cancel/request/?cancel_custom_key=" . $cancelRequestClientKey);
+            $authresponse = new AuthorizeResponse();
+            $authresponse->mapperJson($response);
+            return $authresponse;
+        } catch (\Exception $e) {
+            return $this->generateErrorResponse($e);
+        }
+    }
+
+    /**
      *
      * @param Transaction $transaction
      * @return BaseResponse|BoletoRespose
