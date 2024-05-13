@@ -339,7 +339,7 @@ class Getnet
     public function getCancelTransactionByRequestId($cancelRequestId)
     {
         try {
-            $request = new Request($this);
+            $request = $this->generateRequest($this);
             $response = $request->get($this, "/v1/payments/cancel/request/" . $cancelRequestId);
             $authresponse = new AuthorizeResponse();
             $authresponse->mapperJson($response);
@@ -358,7 +358,7 @@ class Getnet
     public function getCancelRequestByClientKey($cancelRequestClientKey)
     {
         try {
-            $request = new Request($this);
+            $request = $this->generateRequest($this);
             $response = $request->get($this, "/v1/payments/cancel/request/?cancel_custom_key=" . $cancelRequestClientKey);
             $authresponse = new AuthorizeResponse();
             $authresponse->mapperJson($response);
@@ -366,6 +366,11 @@ class Getnet
         } catch (\Exception $e) {
             return $this->generateErrorResponse($e);
         }
+    }
+
+    protected function generateRequest(Getnet $credentials): Request
+    {
+        return new Request($credentials);
     }
 
     /**
