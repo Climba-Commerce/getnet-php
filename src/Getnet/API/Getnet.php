@@ -368,6 +368,25 @@ class Getnet
         }
     }
 
+    /**
+     * Consulta um pagamento pelo payment_id.
+     *
+     * Ao contrário dos demais métodos, a falha não vira resposta com status ERROR: ERROR é
+     * um status real de transação, e quem consulta precisa distinguir "a Getnet disse ERROR"
+     * de "não consegui perguntar à Getnet".
+     *
+     * @param string $payment_id
+     * @return PaymentInfoResponse
+     * @throws \Getnet\API\Exception\GetnetException quando a consulta falha
+     */
+    public function getPayment($payment_id)
+    {
+        $request = $this->generateRequest($this);
+        $response = $request->get($this, "/v1/payments/info/" . rawurlencode($payment_id));
+
+        return new PaymentInfoResponse($response);
+    }
+
     protected function generateRequest(Getnet $credentials): Request
     {
         return new Request($credentials);
