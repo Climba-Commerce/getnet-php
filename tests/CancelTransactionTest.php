@@ -16,7 +16,7 @@ class CancelTransactionTest extends TestBase
         $mock->shouldAllowMockingProtectedMethods();
 
         $requestMock = \Mockery::mock(Request::class);
-        $requestMock->shouldReceive("get")->with($mock, "/v1/payments/cancel/request/?cancel_custom_key=$cancelKey")->andReturn($responseJson);
+        $requestMock->shouldReceive("get")->with($mock, "/v1/payments/cancel/request?cancel_custom_key=$cancelKey")->andReturn($responseJson);
 
         $mock->shouldReceive("generateRequest")->andReturn($requestMock);
         $mock->shouldReceive("getCancelRequestByClientKey")->passthru();
@@ -34,7 +34,7 @@ class CancelTransactionTest extends TestBase
 
         $requestMock = \Mockery::mock(Request::class);
         $requestMock->shouldReceive("get")
-            ->with($mock, "/v1/payments/cancel/request/?cancel_custom_key=$cancelKey")
+            ->with($mock, "/v1/payments/cancel/request?cancel_custom_key=$cancelKey")
             ->andThrow(new \Exception(json_encode(['errorMessage' => 'Error Test'])));
 
         $mock->shouldReceive("generateRequest")->andReturn($requestMock);

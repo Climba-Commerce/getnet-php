@@ -350,7 +350,10 @@ class Getnet
     }
 
     /**
-     * Retorna Solicitações de cancelmento feitas pelo endpoit cancelTransaction (D+n).
+     * Retorna Solicitações de cancelmento feitas pelo endpoit cancelTransaction (D+n), pela chave do cliente.
+     *
+     * A rota é sem barra antes da query: com `/v1/payments/cancel/request/?cancel_custom_key=` a Getnet
+     * responde 404 "No static resource", inclusive para cancelamento concluído.
      *
      * @param string $cancelRequestClientKey
      * @return AuthorizeResponse|BaseResponse
@@ -359,7 +362,10 @@ class Getnet
     {
         try {
             $request = $this->generateRequest($this);
-            $response = $request->get($this, "/v1/payments/cancel/request/?cancel_custom_key=" . $cancelRequestClientKey);
+            $response = $request->get(
+                $this,
+                "/v1/payments/cancel/request?cancel_custom_key=" . rawurlencode($cancelRequestClientKey)
+            );
             $authresponse = new AuthorizeResponse();
             $authresponse->mapperJson($response);
             return $authresponse;
