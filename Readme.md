@@ -151,6 +151,19 @@ $cancel = $getnet->authorizeCancel("[PAYMENT_ID]", [AMOUNT]);
 $cancel->getStatus();
 ```
 
+#### CONSULTA DE PAGAMENTO
+```php
+// Autenticação da API
+$getnet = new Getnet($client_id, $client_secret, $environment, $keySession);
+
+// Lança GetnetException se a consulta falhar
+$payment = $getnet->getPayment("[PAYMENT_ID]");
+
+// Valores: APPROVED, AUTHORIZED, DENIED, CANCELED, CAPTURED ou ERROR
+$payment->getStatus();
+$payment->getOrderId();
+```
+
 #### PAGAMENTO VIA PIX
 ```php
 // Autenticação da API
